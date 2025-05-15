@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Examiner Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Enter Examiner Data</h2>
+        <form action="/add" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Examiner Name</label>
+                <input type="text" name="examiner_name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mobile No</label>
+                <input type="text" name="mobile_no" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Subject</label>
+                <input type="text" name="subject" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Date of Passing</label>
+                <input type="date" name="date_of_passing" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Amount of Remuneration</label>
+                <input type="text" name="amount_of_remuneration" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Travelling Allowance (Select multiple if needed)</label>
+                <select name="travelling_allowance" class="form-select" multiple required>
+                    <option value="Paper Setting">Paper Setting</option>
+                    <option value="Setting Marks">Setting Marks</option>
+                    <option value="Practical">Practical</option>
+                    <option value="Submission of Marklist">Submission of Marklist</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Remarks</label>
+                <textarea name="remarks" class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <hr>
+
+        <h3>All Entries</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Examiner Name</th>
+                    <th>Mobile No</th>
+                    <th>Subject</th>
+                    <th>Date of Passing</th>
+                    <th>Remuneration</th>
+                    <th>Travelling Allowance</th>
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in all_entries %}
+                <tr>
+                    <td>{{ entry['Examiner Name'] }}</td>
+                    <td>{{ entry['Mobile No'] }}</td>
+                    <td>{{ entry['Subject'] }}</td>
+                    <td>{{ entry['Date of Passing'] }}</td>
+                    <td>{{ entry['Amount of Remuneration'] }}</td>
+                    <td>{{ entry['Travelling Allowance'] }}</td>
+                    <td>{{ entry['Remarks'] }}</td>
+                    <td>
+                        <a href="/edit/{{ loop.index0 }}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/delete/{{ loop.index0 }}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="/download" class="btn btn-success">Download Excel</a>
+    </div>
+</body>
+</html>
