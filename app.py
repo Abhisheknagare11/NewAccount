@@ -21,6 +21,17 @@ def index():
     all_entries = df.to_dict(orient='records')
     return render_template("form.html", all_entries=all_entries)
 
+@app.route('/search')
+def search():
+    query = request.args.get('mobile', '').strip()
+    df = pd.read_excel(DATA_FILE)
+
+    # Filter entries where Mobile No contains the search query
+    results = df[df['Mobile No'].astype(str).str.contains(query)]
+
+    return render_template("form.html", all_entries=results.to_dict(orient='records'))
+
+
 @app.route('/add', methods=['POST'])
 def add_entry():
     new_entry = {
